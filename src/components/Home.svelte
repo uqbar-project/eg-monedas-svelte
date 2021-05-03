@@ -9,9 +9,6 @@
   let conversion: Conversion = { monedaAConvertir: '', valorAConvertir: undefined }
   let pesos: number
   let monedas: Moneda[] = []
-  let ultimoValorPesos: number
-  let ultimoValorMoneda: number
-  let ultimaMonedaConversion: string
 
   onMount(async () => {
     toast.removeLastToast()
@@ -31,7 +28,6 @@
     try {
       toast.removeLastToast()
       pesos = await monedaService.convertirAPesos(conversion)
-      setUltimosValores()
     } catch (error) {
       toast.error(error)
     }
@@ -44,21 +40,11 @@
         monedaAConvertir: conversion.monedaAConvertir,
         valorAConvertir: pesos,
       })
-      setUltimosValores()
     } catch (error) {
       toast.error(error)
     }
   }
 
-  function setUltimosValores() {
-    ultimaMonedaConversion = conversion.monedaAConvertir
-    ultimoValorMoneda = conversion.valorAConvertir
-    ultimoValorPesos = pesos
-  }
-
-  $: cambioMoneda = ultimaMonedaConversion != conversion.monedaAConvertir
-  $: cambioValorPesos = ultimoValorPesos != pesos
-  $: cambioValorMoneda = ultimoValorMoneda != conversion.valorAConvertir
 </script>
 
 {#if monedas}
@@ -84,7 +70,7 @@
       <button
         class="convertirAPesos"
         on:click={convertirAPesos}
-        disabled={!conversion.monedaAConvertir || !conversion.valorAConvertir || (!cambioValorMoneda && !cambioMoneda)}
+        disabled={!conversion.monedaAConvertir || !conversion.valorAConvertir}
         >A Peso Argentino</button
       >
     </section>
@@ -98,7 +84,7 @@
       <button
         class="convertirAMoneda"
         on:click={convertirAMoneda}
-        disabled={!pesos || (!cambioValorPesos && !cambioMoneda)}>A {conversion.monedaAConvertir}</button
+        disabled={!pesos}>A {conversion.monedaAConvertir}</button
       >
     </section>
 
