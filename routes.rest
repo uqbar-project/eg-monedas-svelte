@@ -1,0 +1,23 @@
+# Para usar este archivo, hay que instalar la extensión "REST Client" desde las extensiones de VS Code.
+
+GET http://localhost:8080/monedas/
+
+###
+
+PUT http://localhost:8080/monedaAPesos/
+content-type: application/json
+
+{
+  "valorAConvertir": 1,
+  "monedaAConvertir": "Zloty"
+}
+
+###
+
+PUT http://localhost:8080/pesosAMoneda/ 
+content-type: application/json
+
+{
+  "valorAConvertir": 10,
+  "monedaAConvertir": "Zloty"
+}
